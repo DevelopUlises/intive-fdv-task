@@ -2,7 +2,7 @@
 Python task by Intive-FDV
 
 
-###Class Descriptions
+1-Class Descriptions
 
 Rent: Class to manage rent.
 
@@ -10,7 +10,7 @@ Promotion: Class to manage promotion.
 
 Company: Class to manage rent and promotions lists.
 
-###Running Test
+2-Running Test
 
 ```python
 python test.py

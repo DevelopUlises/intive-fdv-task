@@ -1,7 +1,17 @@
+class Bike:
+    def __init__(self,identify):
+        self.identify = identify
+        self.reservated = False
+
+    def __str__(self):
+        return self.identify
+
+
 class Rent:
-    def __init__(self,rent_time,rent_mode):
+    def __init__(self,rent_time,rent_mode,bike=None):
         self.rent_mode = rent_mode
         self.rent_time = rent_time
+        self.bike = bike
         self.price = 0
         self.__set_price()
 
@@ -37,16 +47,36 @@ class Company:
     def __init__(self):
         self.rent_list = list()
         self.promotion_list = list()
+        self.bike_list = list()
 
-    def add_rent(self,rent_time,rent_mode):
-        self.rent_list.append(Rent(rent_time,rent_mode))
+    def add_bike(self,identify):
+        self.bike_list.append(Bike(identify))
 
-    def add_promotion(self,rent_list: [Rent]):
+    def add_rent(self,rent_time,rent_mode,bike):
+        rent = Rent(rent_time,rent_mode)
+        for b in self.bike_list:
+            if b.identify == bike :
+                b.reservated = True
+                rent.bike = b
+                break
+        self.rent_list.append(rent)
 
+    def add_promotion(self,rent_list):
         if 3 < len(rent_list) < 5:
+            for r in rent_list:
+                for b in self.bike_list:
+                    if b.identify == r.bike:
+                        b.reservated = True
+                        r.bike = b
+                        break
+
             self.promotion_list.append(Promotion(rent_list))
 
     def coverage(self):
-        # 85 * "" / 100  Miss define coverage element
-        return 100
+        bike_reserved = 0
+        for b in self.bike_list:
+            if b.reservated:
+                bike_reserved = bike_reserved + 1
+
+        return bike_reserved *100 / len(self.bike_list)
 
